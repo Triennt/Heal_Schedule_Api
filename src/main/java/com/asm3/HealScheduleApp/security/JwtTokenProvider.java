@@ -1,39 +1,35 @@
 package com.asm3.HealScheduleApp.security;
 
 import com.asm3.HealScheduleApp.entity.User;
-import com.asm3.HealScheduleApp.service.UserService;
 import io.jsonwebtoken.*;
-import io.jsonwebtoken.io.Decoders;
-import io.jsonwebtoken.security.Keys;
-import org.springframework.security.core.Authentication;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import javax.crypto.SecretKey;
-import java.security.Key;
 import java.util.Date;
 
 @Component
 public class JwtTokenProvider {
-    // Đoạn JWT_SECRET này là bí mật, chỉ có phía server biết
-    private final String JWT_SECRET = "CreateacollectionforyourrequestsThesigningkeyssizeis48bitswhichisnotsecureenoughfortheHS512algorithm";
-//    SecretKey key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
 
-    //Thời gian có hiệu lực của chuỗi jwt
-    private final long JWT_EXPIRATION = 604800000L;
+    // jwtSecret này là bí mật, chỉ có phía server biết
+    @Value("${HealScheduleApp.jwtSecret}")
+    private String jwtSecret;
+//    private final String JWT_SECRET = "Despitetheunendingspectrumofchallengesthatlifepresents.";
 
-    private Key key() {
-        return Keys.hmacShaKeyFor(Decoders.BASE64.decode(JWT_SECRET));
-    }
+    //Thời gian có hiệu lực của chuỗi jwt (7 ngày)
+    @Value("${HealScheduleApp.jwtExpirationMs}")
+    private long jwtExpirationMs;
+//    private final long JWT_EXPIRATION = 604800000L;
+
     // Tạo ra jwt từ thông tin user
     public String generateToken(User user ) {
         Date now = new Date();
-        Date expiryDate = new Date(now.getTime() + JWT_EXPIRATION);
+        Date expiryDate = new Date(now.getTime() + jwtExpirationMs);
 
         return Jwts.builder()
                 .setSubject(user.getEmail())
                 .setIssuedAt(now)
                 .setExpiration(expiryDate)
-                .signWith(key(), SignatureAlgorithm.HS256)
+                .signWith(SignatureAlgorithm.HS256, jwtSecret)
                 .compact();
     }
 
@@ -43,7 +39,7 @@ public class JwtTokenProvider {
         try {
             // Phân tích token dựa trên khóa bí mật đã được lưu trữ an toàn
             Claims claims = Jwts.parser()
-                    .setSigningKey(key()) // Sử dụng khóa bí mật đã được tạo
+                    .setSigningKey(jwtSecret) // Sử dụng khóa bí mật đã được tạo
                     .build()
                     .parseClaimsJws(token)
                     .getBody();
@@ -53,14 +49,13 @@ public class JwtTokenProvider {
             return claims.getSubject();
         } catch (JwtException e) {
             // Xử lý lỗi nếu token không hợp lệ
-//            throw new InvalidJwtAuthenticationException("Invalid JWT token");
             throw new JwtException("Invalid JWT token");
         }
     }
 
     public boolean validateToken(String authToken) {
         try {
-            Jwts.parser().setSigningKey(key()).build().parse(authToken);
+            Jwts.parser().setSigningKey(jwtSecret).build().parse(authToken);
             return true;
         } catch (MalformedJwtException ex) {
 //            log.error("Invalid JWT token");
