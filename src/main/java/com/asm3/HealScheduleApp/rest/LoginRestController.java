@@ -1,6 +1,7 @@
 package com.asm3.HealScheduleApp.rest;
 
 import com.asm3.HealScheduleApp.response.LoginResponse;
+import com.asm3.HealScheduleApp.response.Response;
 import com.asm3.HealScheduleApp.security.JwtTokenProvider;
 import com.asm3.HealScheduleApp.model.LoginRequest;
 import com.asm3.HealScheduleApp.service.UserService;
@@ -11,9 +12,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class LoginRestController {
@@ -39,9 +38,16 @@ public class LoginRestController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         // Trả về jwt cho người dùng.
-        String jwt = tokenProvider.generateToken(userService.findByEmail(authentication.getName()));
+        String jwt = tokenProvider.createToken(userService.findByEmail(authentication.getName()), "/login");
         LoginResponse message = new LoginResponse(HttpStatus.OK.value(),"Logged in successfully", jwt);
         return new ResponseEntity<LoginResponse>(message, HttpStatus.OK);
 
     }
+    @RequestMapping("/accessDenied")
+    public ResponseEntity<Response> accessDenied(){
+        System.out.println("/accessDenied");
+        Response response = new Response(HttpStatus.UNAUTHORIZED.value(),"Access denied");
+        return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
+    }
+
 }

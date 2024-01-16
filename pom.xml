@@ -12,7 +12,7 @@
 	<artifactId>PRJ321x_Project3_trienntFX21143</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>HealSchedule</name>
-	<descriptions>Medical examination scheduling project</descriptions>
+	<description>Medical examination scheduling project</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
@@ -58,6 +58,10 @@
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>

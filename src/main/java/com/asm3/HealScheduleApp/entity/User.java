@@ -1,6 +1,8 @@
 package com.asm3.HealScheduleApp.entity;
 
 import com.asm3.HealScheduleApp.validation.FieldMatch;
+import com.asm3.HealScheduleApp.validation.ValidEmail;
+import com.asm3.HealScheduleApp.validation.ValidPassword;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -13,7 +15,7 @@ import java.time.LocalDateTime;
 import java.util.Collection;
 
 @FieldMatch.List({
-        @FieldMatch(first = "password", second = "matchingPassword", message = "Các trường mật khẩu phải khớp")
+        @FieldMatch(first = "password", second = "matchingPassword", message = "The password fields must match")
 })
 @Entity
 @Table(name = "user")
@@ -31,10 +33,7 @@ public class User {
     @Column(name = "full_name")
     private String fullName;
 
-    @NotBlank(message = "Email không được để trống.")
-    @NotNull(message = "Bắc buộc")
-    @Pattern(regexp = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
-            + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$", message = "Email không hợp lệ.")
+    @ValidEmail
     @Column(name = "email")
     private String email;
 
@@ -62,13 +61,10 @@ public class User {
     @Column(name = "active")
     private boolean active;
 
-    @NotBlank(message = "Mật khẩu không được để trống")
-    @NotNull(message = "Bắc buộc")
+//    @ValidPassword
     @Column(name = "password")
     private String password;
 
-    @NotBlank(message = "Mật khẩu không được để trống")
-    @NotNull(message = "Bắc buộc")
     @Column(name = "matching_password")
     private String matchingPassword;
 

@@ -1,18 +1,16 @@
 package com.asm3.HealScheduleApp.rest.exceptionHandler;
 
-
-import com.asm3.HealScheduleApp.exception.CustomNotFoundException;
 import com.asm3.HealScheduleApp.response.ErrorResponse;
+import com.asm3.HealScheduleApp.response.Response;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import java.util.ArrayList;
-import java.util.List;
-
-@ControllerAdvice
+@ControllerAdvice(basePackages = "com.asm3.HealScheduleApp")
+@Order(1)
 public class RestExceptionHandler {
 
 
@@ -25,12 +23,12 @@ public class RestExceptionHandler {
 
 	}
 
-	@ExceptionHandler
-	public ResponseEntity<ErrorResponse> handleException(Exception exc){
+	@ExceptionHandler(Exception.class)
+	public ResponseEntity<Response> handleException(Exception exc){
 
-		ErrorResponse error = new ErrorResponse(HttpStatus.BAD_REQUEST.value(),
-																	exc.getMessage());
+		Response error = new Response(HttpStatus.BAD_REQUEST.value(),exc.getMessage());
 
 		return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
 	}
+
 }
