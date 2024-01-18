@@ -72,9 +72,9 @@ public class RegistrationRestController {
             return new ResponseEntity<ErrorResponse>(error, HttpStatus.BAD_REQUEST);
         }
 
-        userService.create(user);
+        User userCreated = userService.create(user);
 
-        CreateUserResponse success = new CreateUserResponse(HttpStatus.CREATED.value(), "Sign Up Success.", userService.findByEmail(user.getEmail()));
+        CreateUserResponse success = new CreateUserResponse(HttpStatus.CREATED.value(), "Sign Up Success.", userCreated);
         return new ResponseEntity<CreateUserResponse>(success, HttpStatus.CREATED);
 
     }

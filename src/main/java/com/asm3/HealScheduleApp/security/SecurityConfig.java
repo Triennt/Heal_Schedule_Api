@@ -36,10 +36,11 @@ public class SecurityConfig {
 						.requestMatchers(HttpMethod.POST, "/login").permitAll()
 						.requestMatchers(HttpMethod.GET, "/forgotPassword").permitAll()
 						.requestMatchers(HttpMethod.PUT, "/changePassword").permitAll()
-						.requestMatchers(HttpMethod.GET, "/user").hasRole("USER")
-						.requestMatchers(HttpMethod.GET, "/doctor").hasRole("DOCTOR")
-						.requestMatchers(HttpMethod.POST, "/DOCTOR/**").hasRole("DOCTOR")
-						.requestMatchers(HttpMethod.PUT, "/ADMIN/**").hasRole("ADMIN")
+						.requestMatchers(HttpMethod.GET, "/home/**").permitAll()
+						.requestMatchers(HttpMethod.GET, "/user/**").hasRole("USER")
+						.requestMatchers(HttpMethod.GET, "/doctor/**").hasRole("DOCTOR")
+
+
 		);
 
 		http.authenticationProvider(authenticationProvider(userService));

@@ -3,6 +3,7 @@ package com.asm3.HealScheduleApp.entity;
 import com.asm3.HealScheduleApp.validation.FieldMatch;
 import com.asm3.HealScheduleApp.validation.ValidEmail;
 import com.asm3.HealScheduleApp.validation.ValidPassword;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -19,6 +20,7 @@ import java.util.Collection;
 })
 @Entity
 @Table(name = "user")
+@JsonIgnoreProperties({"password","matchingPassword"})
 @Data
 @NoArgsConstructor
 public class User {
@@ -75,7 +77,7 @@ public class User {
     private Collection<Role> roles;
 
     @Column(name = "created_at")
-    private LocalDateTime createdAt;
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;

@@ -45,13 +45,13 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void create(User user) {
+    public User create(User user) {
         System.out.println("Called create: ");
         user.setId(0);
         user.setRoles(Arrays.asList(roleService.findByName("ROLE_USER")));
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setMatchingPassword(user.getPassword());
-        userRepository.save(user);
+        return userRepository.save(user);
     }
 
     @Override
