@@ -3,7 +3,7 @@ package com.asm3.HealScheduleApp.rest;
 import com.asm3.HealScheduleApp.response.LoginResponse;
 import com.asm3.HealScheduleApp.response.Response;
 import com.asm3.HealScheduleApp.security.JwtTokenProvider;
-import com.asm3.HealScheduleApp.model.LoginRequest;
+import com.asm3.HealScheduleApp.body.LoginRequest;
 import com.asm3.HealScheduleApp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

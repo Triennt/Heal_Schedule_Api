@@ -1,4 +1,4 @@
-package com.asm3.HealScheduleApp.model;
+package com.asm3.HealScheduleApp.body;
 
 import com.asm3.HealScheduleApp.validation.FieldMatch;
 import jakarta.validation.constraints.NotNull;

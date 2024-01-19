@@ -3,7 +3,7 @@ package com.asm3.HealScheduleApp.service;
 import com.asm3.HealScheduleApp.dao.UserRepository;
 import com.asm3.HealScheduleApp.entity.Role;
 import com.asm3.HealScheduleApp.entity.User;
-import com.asm3.HealScheduleApp.model.ChangePasswordRequest;
+import com.asm3.HealScheduleApp.body.ChangePasswordRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -11,7 +11,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.annotation.Validated;
 
 import java.util.Arrays;
 import java.util.Collection;

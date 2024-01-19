@@ -1,26 +1,29 @@
 package com.asm3.HealScheduleApp.rest;
 
-import com.asm3.HealScheduleApp.dao.ClinicRepository;
+import com.asm3.HealScheduleApp.body.GeneralSearchRequest;
 import com.asm3.HealScheduleApp.entity.Clinic;
+import com.asm3.HealScheduleApp.entity.DoctorInformation;
 import com.asm3.HealScheduleApp.entity.Specialization;
+import com.asm3.HealScheduleApp.response.SearchResponse;
 import com.asm3.HealScheduleApp.response.HomeResponse;
 import com.asm3.HealScheduleApp.service.ClinicService;
+import com.asm3.HealScheduleApp.service.DoctorInformationService;
 import com.asm3.HealScheduleApp.service.SpecializationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 public class HomeRestController {
     @Autowired
-    SpecializationService specializationService;
+    private SpecializationService specializationService;
     @Autowired
-    ClinicService clinicService;
+    private ClinicService clinicService;
+    @Autowired
+    private DoctorInformationService doctorInformationService;
 
     @GetMapping("/home")
     public ResponseEntity<HomeResponse> home(){
@@ -32,8 +35,22 @@ public class HomeRestController {
         return new ResponseEntity<HomeResponse>(homeResponse, HttpStatus.OK);
     }
 
-    @GetMapping("/home/search")
-    public String search(){
-        return "search";
+    @GetMapping("/home/search/general")
+    public ResponseEntity<SearchResponse> generalSearch(@RequestBody GeneralSearchRequest generalSearchRequest){
+
+        List<DoctorInformation> doctors = doctorInformationService.generalSearch(generalSearchRequest);
+        SearchResponse searchResponse = new SearchResponse(HttpStatus.OK.value(), "Search results",doctors);
+
+        return new ResponseEntity<SearchResponse>(searchResponse, HttpStatus.OK);
     }
+
+    @GetMapping("/home/search/specialization")
+    public ResponseEntity<SearchResponse> specializationSearch(@RequestParam String specialization){
+
+        List<DoctorInformation> doctors = doctorInformationService.specializationSearch(specialization);
+        SearchResponse searchResponse = new SearchResponse(HttpStatus.OK.value(), "Search results",doctors);
+
+        return new ResponseEntity<SearchResponse>(searchResponse, HttpStatus.OK);
+    }
+
 }

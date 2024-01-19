@@ -26,6 +26,9 @@ public class Clinic {
     @Column(name = "phone")
     private String phone;
 
+    @Column(name = "price")
+    private double price;
+
     @Column(name = "introduction_HTML")
     private String introductionHTML;
 
