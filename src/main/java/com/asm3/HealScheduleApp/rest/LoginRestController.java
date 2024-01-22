@@ -23,7 +23,7 @@ public class LoginRestController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("/login")
+    @GetMapping("/login")
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
         // Xác thực từ email và password.
         Authentication authentication = authenticationManager.authenticate(
@@ -43,11 +43,11 @@ public class LoginRestController {
         return new ResponseEntity<LoginResponse>(message, HttpStatus.OK);
 
     }
-    @RequestMapping("/accessDenied")
-    public ResponseEntity<Response> accessDenied(){
-        System.out.println("/accessDenied");
-        Response response = new Response(HttpStatus.UNAUTHORIZED.value(),"Access denied");
-        return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
-    }
+//    @RequestMapping("/accessDenied")
+//    public ResponseEntity<Response> accessDenied(){
+//        System.out.println("/accessDenied");
+//        Response response = new Response(HttpStatus.UNAUTHORIZED.value(),"Access denied");
+//        return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
+//    }
 
 }

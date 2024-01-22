@@ -9,4 +9,6 @@ public interface DoctorInformationService {
     List<DoctorInformation> generalSearch(GeneralSearchRequest generalSearchRequest);
 
     List<DoctorInformation> specializationSearch(String specialization);
+
+    DoctorInformation findById(long id);
 }

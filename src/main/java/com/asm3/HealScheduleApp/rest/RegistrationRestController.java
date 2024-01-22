@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
@@ -51,15 +52,8 @@ public class RegistrationRestController {
         System.out.println(user.getPassword());
         System.out.println(user.getMatchingPassword());
         if (bindingResult.hasErrors()){
-            // Lấy danh sách lỗi từ BindingResult
-            List<FieldError> errors = bindingResult.getFieldErrors();
 
-            // Duyệt qua danh sách lỗi và chuyển chúng sang model
-            String description = "";
-            for (FieldError error : errors) {
-                description = error.getField() + ": " + error.getDefaultMessage() + "\n";
-            }
-            ErrorResponse error = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), "Registration failed.", description);
+            ErrorResponse error = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), "Registration failed.", getDescriptionErrors(bindingResult));
 
             return new ResponseEntity<ErrorResponse>(error, HttpStatus.BAD_REQUEST);
         }
@@ -76,6 +70,19 @@ public class RegistrationRestController {
         return new ResponseEntity<CreateUserResponse>(success, HttpStatus.CREATED);
 
     }
+
+    public String getDescriptionErrors(BindingResult bindingResult){
+        // Lấy danh sách lỗi từ BindingResult
+        List<FieldError> errors = bindingResult.getFieldErrors();
+
+        // Duyệt qua danh sách lỗi và chuyển chúng sang model
+        String description = "";
+        for (FieldError error : errors) {
+            description =description + error.getField() + ": " + error.getDefaultMessage() + "\n";
+        }
+        return description;
+    }
+
     @GetMapping("/forgotPassword")
     public ResponseEntity<Response> sendEmail(@RequestParam("email") String email){
         System.out.println("verifyEmail: "+email);
@@ -99,15 +106,8 @@ public class RegistrationRestController {
                                                    HttpServletRequest request,
                                                    BindingResult bindingResult){
         if (bindingResult.hasErrors()){
-            // Lấy danh sách lỗi từ BindingResult
-            List<FieldError> errors = bindingResult.getFieldErrors();
 
-            // Duyệt qua danh sách lỗi và chuyển chúng sang model
-            String description = "";
-            for (FieldError error : errors) {
-                description = error.getField() + ": " + error.getDefaultMessage() + "\n";
-            }
-            ErrorResponse error = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), "Change password failed.", description);
+            ErrorResponse error = new ErrorResponse(HttpStatus.BAD_REQUEST.value(), "Change password failed.", getDescriptionErrors(bindingResult));
 
             return new ResponseEntity<ErrorResponse>(error, HttpStatus.BAD_REQUEST);
         }

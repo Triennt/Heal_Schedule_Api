@@ -33,11 +33,12 @@ public class SecurityConfig {
 		http.authorizeHttpRequests(configurer ->
 				configurer
 						.requestMatchers(HttpMethod.POST, "/register").permitAll()  //.hasAnyRole("USER","DOCTOR","ADMIN")
-						.requestMatchers(HttpMethod.POST, "/login").permitAll()
+						.requestMatchers(HttpMethod.GET, "/login").permitAll()
 						.requestMatchers(HttpMethod.GET, "/forgotPassword").permitAll()
 						.requestMatchers(HttpMethod.PUT, "/changePassword").permitAll()
 						.requestMatchers(HttpMethod.GET, "/home/**").permitAll()
-						.requestMatchers(HttpMethod.GET, "/user/**").hasRole("USER")
+						.requestMatchers(HttpMethod.GET,"/user/**").hasRole("USER")
+						.requestMatchers(HttpMethod.POST,"/user/**").hasRole("USER")
 						.requestMatchers(HttpMethod.GET, "/doctor/**").hasRole("DOCTOR")
 
 

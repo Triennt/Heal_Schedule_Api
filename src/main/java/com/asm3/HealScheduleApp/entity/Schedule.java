@@ -27,8 +27,8 @@ public class Schedule {
     @JoinColumn(name = "patients_id")
     private Patients patients;
 
-    @Column(name = "pathology_name")
-    private String pathologyName;
+//    @Column(name = "pathology_name")
+//    private String pathologyName;
 
     @Column(name = "date")
     private LocalDate date;

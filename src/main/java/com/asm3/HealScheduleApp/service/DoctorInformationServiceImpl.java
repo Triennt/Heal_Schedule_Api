@@ -26,4 +26,9 @@ public class DoctorInformationServiceImpl implements DoctorInformationService{
     public List<DoctorInformation> specializationSearch(String specialization) {
         return doctorInformationRepository.specializationSearch(specialization);
     }
+
+    @Override
+    public DoctorInformation findById(long id) {
+        return doctorInformationRepository.findById(id);
+    }
 }

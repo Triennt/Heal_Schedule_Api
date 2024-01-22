@@ -23,4 +23,6 @@ public interface DoctorInformationRepository extends JpaRepository<DoctorInforma
             "where S.name like %?1%")
     List<DoctorInformation> specializationSearch(String specialization);
 
+    DoctorInformation findById(long id);
+
 }

@@ -2,9 +2,12 @@ package com.asm3.HealScheduleApp.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -18,6 +21,30 @@ public class Patients {
     @Column(name = "id")
     private long id;
 
+    @Column(name = "full_name")
+    @NotNull(message = "is required")
+    private String fullName;
+
+    @Column(name = "gender")
+    @NotNull(message = "is required")
+    private String gender;
+
+    @Column(name = "phone")
+    @Pattern(regexp = "0[0-9]{9}", message = "invalid phone number.")
+    private String phone;
+
+    @Column(name = "birthday")
+    @NotNull(message = "is required")
+    private LocalDate birthday;
+
+    @Column(name = "address")
+    @NotNull(message = "is required")
+    private String address;
+
+    @Column(name = "pathology")
+    @NotNull(message = "is required")
+    private String pathologyName;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
 //    @JsonIgnoreProperties({"password","matchingPassword"})
@@ -26,9 +53,6 @@ public class Patients {
     @OneToOne
     @JoinColumn(name = "doctor_information_id")
     private DoctorInformation doctorInformation;
-
-    @Column(name = "pathology_name")
-    private String pathologyName;
 
     @OneToOne
     @JoinColumn(name = "status_id")
