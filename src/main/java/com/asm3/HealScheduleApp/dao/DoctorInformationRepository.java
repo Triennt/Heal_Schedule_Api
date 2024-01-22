@@ -1,6 +1,7 @@
 package com.asm3.HealScheduleApp.dao;
 
 import com.asm3.HealScheduleApp.entity.DoctorInformation;
+import com.asm3.HealScheduleApp.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -24,5 +25,7 @@ public interface DoctorInformationRepository extends JpaRepository<DoctorInforma
     List<DoctorInformation> specializationSearch(String specialization);
 
     DoctorInformation findById(long id);
+
+    DoctorInformation findByUser(User user);
 
 }

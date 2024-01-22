@@ -10,4 +10,7 @@ public interface ScheduleService {
     List<Schedule> getMedicalHistory(User user);
 
     Schedule save(BookRequest bookRequest);
+    Schedule save(Schedule schedule);
+
+    Schedule findById(long id);
 }

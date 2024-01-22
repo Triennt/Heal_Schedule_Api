@@ -45,6 +45,9 @@ public class Patients {
     @NotNull(message = "is required")
     private String pathologyName;
 
+    @Column(name = "description")
+    private String description;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
 //    @JsonIgnoreProperties({"password","matchingPassword"})

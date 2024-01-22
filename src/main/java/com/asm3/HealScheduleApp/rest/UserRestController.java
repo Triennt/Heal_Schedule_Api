@@ -1,11 +1,9 @@
 package com.asm3.HealScheduleApp.rest;
 
 import com.asm3.HealScheduleApp.body.BookRequest;
-import com.asm3.HealScheduleApp.entity.DoctorInformation;
 import com.asm3.HealScheduleApp.entity.Schedule;
 import com.asm3.HealScheduleApp.entity.User;
-import com.asm3.HealScheduleApp.exception.CustomNotFoundException;
-import com.asm3.HealScheduleApp.response.BookResponse;
+import com.asm3.HealScheduleApp.response.ScheduleResponse;
 import com.asm3.HealScheduleApp.response.ErrorResponse;
 import com.asm3.HealScheduleApp.response.ProfileResponse;
 import com.asm3.HealScheduleApp.service.DoctorInformationService;
@@ -15,7 +13,6 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -77,7 +74,7 @@ public class UserRestController {
 //            return new ResponseEntity<BookResponse>(bookResponse, HttpStatus.OK);
 //        }
         Schedule schedule = scheduleService.save(bookRequest);
-        BookResponse bookResponse = new BookResponse(HttpStatus.OK.value(), "Scheduled successfully",schedule);
-        return new ResponseEntity<BookResponse>(bookResponse, HttpStatus.OK);
+        ScheduleResponse scheduleResponse = new ScheduleResponse(HttpStatus.OK.value(), "Scheduled successfully",schedule);
+        return new ResponseEntity<ScheduleResponse>(scheduleResponse, HttpStatus.OK);
     }
 }

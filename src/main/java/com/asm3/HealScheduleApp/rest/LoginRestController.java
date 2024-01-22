@@ -39,7 +39,7 @@ public class LoginRestController {
 
         // Trả về jwt cho người dùng.
         String jwt = tokenProvider.createToken(userService.findByEmail(authentication.getName()), "/login");
-        LoginResponse message = new LoginResponse(HttpStatus.OK.value(),"Logged in successfully", jwt);
+        LoginResponse message = new LoginResponse(HttpStatus.OK.value(),"Logged in successfully", loginRequest.getEmail(),jwt);
         return new ResponseEntity<LoginResponse>(message, HttpStatus.OK);
 
     }

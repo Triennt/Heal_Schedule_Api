@@ -62,4 +62,14 @@ public class ScheduleServiceImpl implements ScheduleService{
 
         return scheduleRepository.save(schedule);
     }
+
+    @Override
+    public Schedule save(Schedule schedule) {
+        return scheduleRepository.save(schedule);
+    }
+
+    @Override
+    public Schedule findById(long id) {
+        return scheduleRepository.findById(id);
+    }
 }

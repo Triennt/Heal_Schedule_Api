@@ -39,9 +39,9 @@ public class Schedule {
     @Column(name = "price")
     private double price;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "status_id")
-    private Status status;
+    private Status status = new Status();
 
     @Column(name = "created_at")
     private LocalDateTime createdAt = LocalDateTime.now();

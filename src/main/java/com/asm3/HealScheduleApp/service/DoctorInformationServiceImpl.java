@@ -2,7 +2,9 @@ package com.asm3.HealScheduleApp.service;
 
 import com.asm3.HealScheduleApp.body.GeneralSearchRequest;
 import com.asm3.HealScheduleApp.dao.DoctorInformationRepository;
+import com.asm3.HealScheduleApp.dao.UserRepository;
 import com.asm3.HealScheduleApp.entity.DoctorInformation;
+import com.asm3.HealScheduleApp.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +14,8 @@ import java.util.List;
 public class DoctorInformationServiceImpl implements DoctorInformationService{
     @Autowired
     private DoctorInformationRepository doctorInformationRepository;
+    @Autowired
+    private UserRepository userRepository;
     @Override
     public List<DoctorInformation> generalSearch(GeneralSearchRequest generalSearchRequest) {
         String area = generalSearchRequest.getArea();
@@ -30,5 +34,12 @@ public class DoctorInformationServiceImpl implements DoctorInformationService{
     @Override
     public DoctorInformation findById(long id) {
         return doctorInformationRepository.findById(id);
+    }
+
+
+    @Override
+    public DoctorInformation findByEmail(String email) {
+        User user = userRepository.findByEmail(email);
+        return doctorInformationRepository.findByUser(user);
     }
 }

@@ -13,4 +13,6 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
             "join Patients P on S.patients = P " +
             "where P.user = ?1")
     List<Schedule> getMedicalHistory(User user);
+
+    Schedule findById(long id);
 }

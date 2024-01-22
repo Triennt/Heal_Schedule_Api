@@ -18,7 +18,10 @@ public class Status {
     private long id;
 
     @Column(name = "name")
-    private String name;
+    private String name = "Newly created";
+
+    @Column(name = "description")
+    private String description;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt = LocalDateTime.now();

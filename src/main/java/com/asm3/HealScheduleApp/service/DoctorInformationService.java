@@ -11,4 +11,6 @@ public interface DoctorInformationService {
     List<DoctorInformation> specializationSearch(String specialization);
 
     DoctorInformation findById(long id);
+
+    DoctorInformation findByEmail(String email);
 }
