@@ -50,7 +50,7 @@ public class Patients {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-//    @JsonIgnoreProperties({"password","matchingPassword"})
+    @JsonIgnoreProperties({"password","matchingPassword"})
     private User user;
 
     @OneToOne

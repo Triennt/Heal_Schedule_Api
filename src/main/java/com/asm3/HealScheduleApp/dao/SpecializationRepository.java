@@ -16,4 +16,6 @@ public interface SpecializationRepository extends JpaRepository<Specialization, 
             "group by Sp " +
             "order by count(Sp) desc")
     List<Specialization> getTopSpecialization(Pageable pageable);
+
+    Specialization findById(long id);
 }

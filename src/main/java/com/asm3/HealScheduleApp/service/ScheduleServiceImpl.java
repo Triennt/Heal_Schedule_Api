@@ -1,6 +1,6 @@
 package com.asm3.HealScheduleApp.service;
 
-import com.asm3.HealScheduleApp.body.BookRequest;
+import com.asm3.HealScheduleApp.dto.BookRequest;
 import com.asm3.HealScheduleApp.dao.DoctorInformationRepository;
 import com.asm3.HealScheduleApp.dao.PatientsRepository;
 import com.asm3.HealScheduleApp.dao.ScheduleRepository;

@@ -1,4 +1,4 @@
-package com.asm3.HealScheduleApp.body;
+package com.asm3.HealScheduleApp.dto;
 
 import com.asm3.HealScheduleApp.entity.Patients;
 import jakarta.validation.Valid;

@@ -3,7 +3,7 @@ package com.asm3.HealScheduleApp.entity;
 import com.asm3.HealScheduleApp.validation.FieldMatch;
 import com.asm3.HealScheduleApp.validation.ValidEmail;
 import com.asm3.HealScheduleApp.validation.ValidPassword;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -20,7 +20,7 @@ import java.util.Collection;
 })
 @Entity
 @Table(name = "user")
-@JsonIgnoreProperties({"password","matchingPassword"})
+//@JsonIgnoreProperties({"password","matchingPassword"})
 @Data
 @NoArgsConstructor
 public class User {

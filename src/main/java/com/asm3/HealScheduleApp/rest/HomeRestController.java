@@ -1,6 +1,6 @@
 package com.asm3.HealScheduleApp.rest;
 
-import com.asm3.HealScheduleApp.body.GeneralSearchRequest;
+import com.asm3.HealScheduleApp.dto.GeneralSearchRequest;
 import com.asm3.HealScheduleApp.entity.Clinic;
 import com.asm3.HealScheduleApp.entity.DoctorInformation;
 import com.asm3.HealScheduleApp.entity.Specialization;

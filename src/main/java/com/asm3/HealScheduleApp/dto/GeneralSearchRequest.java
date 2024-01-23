@@ -1,4 +1,4 @@
-package com.asm3.HealScheduleApp.body;
+package com.asm3.HealScheduleApp.dto;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

@@ -3,7 +3,7 @@ package com.asm3.HealScheduleApp.service;
 import com.asm3.HealScheduleApp.dao.UserRepository;
 import com.asm3.HealScheduleApp.entity.Role;
 import com.asm3.HealScheduleApp.entity.User;
-import com.asm3.HealScheduleApp.body.ChangePasswordRequest;
+import com.asm3.HealScheduleApp.dto.ChangePasswordRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

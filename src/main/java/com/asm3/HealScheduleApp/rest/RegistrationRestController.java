@@ -2,7 +2,7 @@ package com.asm3.HealScheduleApp.rest;
 
 import com.asm3.HealScheduleApp.entity.User;
 import com.asm3.HealScheduleApp.exception.CustomNotFoundException;
-import com.asm3.HealScheduleApp.body.ChangePasswordRequest;
+import com.asm3.HealScheduleApp.dto.ChangePasswordRequest;
 import com.asm3.HealScheduleApp.response.ErrorResponse;
 import com.asm3.HealScheduleApp.response.CreateUserResponse;
 import com.asm3.HealScheduleApp.response.Response;
@@ -13,7 +13,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;

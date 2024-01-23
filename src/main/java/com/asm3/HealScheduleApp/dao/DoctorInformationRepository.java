@@ -28,4 +28,6 @@ public interface DoctorInformationRepository extends JpaRepository<DoctorInforma
 
     DoctorInformation findByUser(User user);
 
+
+
 }

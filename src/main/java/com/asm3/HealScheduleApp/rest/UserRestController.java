@@ -1,6 +1,6 @@
 package com.asm3.HealScheduleApp.rest;
 
-import com.asm3.HealScheduleApp.body.BookRequest;
+import com.asm3.HealScheduleApp.dto.BookRequest;
 import com.asm3.HealScheduleApp.entity.Schedule;
 import com.asm3.HealScheduleApp.entity.User;
 import com.asm3.HealScheduleApp.response.ScheduleResponse;

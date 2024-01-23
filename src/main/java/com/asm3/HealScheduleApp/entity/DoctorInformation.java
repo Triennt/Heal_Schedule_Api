@@ -2,6 +2,8 @@ package com.asm3.HealScheduleApp.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -16,14 +18,27 @@ public class DoctorInformation {
     @Column(name = "id")
     private long id;
 
-    @OneToOne
-    @JoinColumn(name = "user_id")
-//    @JsonIgnoreProperties({"password","matchingPassword"})
-    private User user;
+    @Column(name = "introduce")
+    @NotNull(message = "is required")
+    private String introduce;
 
-    @OneToOne
+    @Column(name = "training_process")
+    @NotNull(message = "is required")
+    private String trainingProcess;
+
+    @Column(name = "achievements")
+    @NotNull(message = "is required")
+    private String achievements;
+
+    @ManyToOne
     @JoinColumn(name = "specialization_id")
     private Specialization specialization;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    @Valid
+    @JsonIgnoreProperties({"password","matchingPassword"})
+    private User user;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt = LocalDateTime.now();
