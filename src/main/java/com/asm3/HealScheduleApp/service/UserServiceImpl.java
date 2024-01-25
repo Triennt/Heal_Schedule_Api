@@ -25,14 +25,29 @@ public class UserServiceImpl implements UserService{
     private RoleService roleService;
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
+
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = findByEmail(email);
         if (user == null) {
             throw new UsernameNotFoundException("Invalid username or password.");
         }
-        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(),
-                mapRolesToAuthorities(user.getRoles()));
+        return new org.springframework.security.core.userdetails.User(
+                user.getEmail(),
+                user.getPassword(),
+                true, // enabled
+                true, // accountNonExpired
+                true, // credentialsNonExpired
+                user.getActiveStatus().isActive(),
+                mapRolesToAuthorities(user.getRoles())
+        );
+//        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(),
+//                mapRolesToAuthorities(user.getRoles()));
+    }
+
+    @Override
+    public User findById(long id) {
+        return userRepository.findById(id);
     }
 
     private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
@@ -50,6 +65,11 @@ public class UserServiceImpl implements UserService{
         user.setRoles(Arrays.asList(roleService.findByName("ROLE_USER")));
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setMatchingPassword(user.getPassword());
+        return userRepository.save(user);
+    }
+
+    @Override
+    public User save(User user) {
         return userRepository.save(user);
     }
 

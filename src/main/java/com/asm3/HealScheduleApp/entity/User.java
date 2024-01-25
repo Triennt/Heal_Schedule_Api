@@ -2,13 +2,10 @@ package com.asm3.HealScheduleApp.entity;
 
 import com.asm3.HealScheduleApp.validation.FieldMatch;
 import com.asm3.HealScheduleApp.validation.ValidEmail;
-import com.asm3.HealScheduleApp.validation.ValidPassword;
-import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -60,8 +57,9 @@ public class User {
     @Column(name = "avatar")
     private String avatar;
 
-    @Column(name = "active")
-    private boolean active;
+    @OneToOne
+    @JoinColumn(name = "active_id")
+    private ActiveStatus activeStatus;
 
 //    @ValidPassword
     @Column(name = "password")
@@ -85,12 +83,19 @@ public class User {
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
 
-    public Collection<Role> getRoles() {
-        return roles;
-    }
+//    public Collection<Role> getRoles() {
+//        return roles;
+//    }
+//
+//    public void setRoles(Collection<Role> roles) {
+//        this.roles = roles;
+//    }
 
-    public void setRoles(Collection<Role> roles) {
-        this.roles = roles;
-    }
-
+//    public Active getActive() {
+//        return active;
+//    }
+//
+//    public void setActive(Active active) {
+//        this.active = active;
+//    }
 }

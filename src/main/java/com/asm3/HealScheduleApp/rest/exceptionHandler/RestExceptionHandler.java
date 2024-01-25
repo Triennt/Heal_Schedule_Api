@@ -9,8 +9,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-@ControllerAdvice(basePackages = "com.asm3.HealScheduleApp")
-@Order(1)
+@ControllerAdvice
 public class RestExceptionHandler {
 
 

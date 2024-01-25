@@ -30,15 +30,19 @@ public class AuthTokenFilter extends OncePerRequestFilter {
                 String username = jwtTokenProvider.getUserNameFromJwtToken(jwt, request.getRequestURI());
 
                 UserDetails userDetails = userService.loadUserByUsername(username);
+                if (userDetails.isAccountNonLocked()){
+                    UsernamePasswordAuthenticationToken authentication =
+                            new UsernamePasswordAuthenticationToken(userDetails,
+                                    null,
+                                    userDetails.getAuthorities());
 
-                UsernamePasswordAuthenticationToken authentication =
-                        new UsernamePasswordAuthenticationToken(userDetails,
-                                null,
-                                userDetails.getAuthorities());
+                    authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
-                authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-
-                SecurityContextHolder.getContext().setAuthentication(authentication);
+                    SecurityContextHolder.getContext().setAuthentication(authentication);
+                } else {
+                    logger.error("Account is locked");
+//                    throw new Exception("Account is locked");
+                }
             }
         } catch (Exception e) {
             logger.error("Cannot set user authentication: {}", e);
