@@ -71,6 +71,7 @@ public class AdminRestController {
 
             user.getActiveStatus().setActive(true);
             user.getActiveStatus().setName("Active");
+            user.getActiveStatus().setDescription("Active account");
 
             user = userService.save(user);
             Response response = new Response(HttpStatus.OK.value(), "Successfully unblocked "+user.getEmail()+" account");

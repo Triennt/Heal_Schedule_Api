@@ -57,9 +57,9 @@ public class User {
     @Column(name = "avatar")
     private String avatar;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "active_id")
-    private ActiveStatus activeStatus;
+    private ActiveStatus activeStatus = new ActiveStatus();
 
 //    @ValidPassword
     @Column(name = "password")

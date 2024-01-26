@@ -14,11 +14,11 @@ public class ActiveStatus {
     private long id;
 
     @Column(name = "name")
-    private String name;
+    private String name = "Active";
 
     @Column(name = "description")
-    private String description;
+    private String description = "Active account";
 
     @Column(name = "value")
-    private boolean active;
+    private boolean active = true;
 }
