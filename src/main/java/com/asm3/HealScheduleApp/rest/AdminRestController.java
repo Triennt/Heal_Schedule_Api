@@ -2,12 +2,15 @@ package com.asm3.HealScheduleApp.rest;
 
 import com.asm3.HealScheduleApp.dto.AddDoctorRequest;
 import com.asm3.HealScheduleApp.entity.DoctorInformation;
+import com.asm3.HealScheduleApp.entity.Schedule;
 import com.asm3.HealScheduleApp.entity.User;
 import com.asm3.HealScheduleApp.exception.CustomNotFoundException;
 import com.asm3.HealScheduleApp.response.AddDoctorResponse;
 import com.asm3.HealScheduleApp.response.ErrorResponse;
+import com.asm3.HealScheduleApp.response.ListScheduleResponse;
 import com.asm3.HealScheduleApp.response.Response;
 import com.asm3.HealScheduleApp.service.DoctorInformationService;
+import com.asm3.HealScheduleApp.service.ScheduleService;
 import com.asm3.HealScheduleApp.service.UserService;
 import com.asm3.HealScheduleApp.utils.MyUtils;
 import jakarta.validation.Valid;
@@ -29,6 +32,8 @@ public class AdminRestController {
     private DoctorInformationService doctorInformationService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private ScheduleService scheduleService;
     @PostMapping("/addDoctor")
     public ResponseEntity<?> addDoctor(@Valid @RequestBody AddDoctorRequest doctor, BindingResult bindingResult){
 
@@ -81,5 +86,26 @@ public class AdminRestController {
             throw new CustomNotFoundException("No account found with id = "+userId);
         }
     }
+    @GetMapping("/schedule/patients/{userId}")
+    public ResponseEntity<?> scheduleOfPatients(@PathVariable long userId){
+
+        User user = userService.findById(userId);
+        if (user == null || user.getRoles().stream().noneMatch(role -> role.getName().equals("ROLE_USER")))
+            throw new CustomNotFoundException("No found patients with id = "+userId);
+        List<Schedule> schedules = scheduleService.getMedicalHistory(user);
+        ListScheduleResponse listScheduleResponse = new ListScheduleResponse(HttpStatus.OK.value(), "details of patient "+user.getFullName()+"'s examination schedule",schedules);
+        return new ResponseEntity<ListScheduleResponse>(listScheduleResponse,HttpStatus.OK);
+    }
+    @GetMapping("/schedule/doctor/{doctorId}")
+    public ResponseEntity<?> scheduleOfDoctor(@PathVariable long doctorId){
+        DoctorInformation doctor = doctorInformationService.findById(doctorId);
+        if (doctor == null)
+            throw new CustomNotFoundException("No found doctor with id = "+doctorId);
+
+        List<Schedule> schedules = scheduleService.getSchedulesOfDoctor(doctor);
+        ListScheduleResponse listScheduleResponse = new ListScheduleResponse(HttpStatus.OK.value(), "details of doctor "+doctor.getUser().getFullName()+"'s examination schedule",schedules);
+        return new ResponseEntity<ListScheduleResponse>(listScheduleResponse,HttpStatus.OK);
+    }
+
 
 }

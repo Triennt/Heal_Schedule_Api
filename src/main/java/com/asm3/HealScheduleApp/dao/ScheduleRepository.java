@@ -1,5 +1,6 @@
 package com.asm3.HealScheduleApp.dao;
 
+import com.asm3.HealScheduleApp.entity.DoctorInformation;
 import com.asm3.HealScheduleApp.entity.Schedule;
 import com.asm3.HealScheduleApp.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,7 +13,9 @@ public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
             "from Schedule S " +
             "join Patients P on S.patients = P " +
             "where P.user = ?1")
-    List<Schedule> getMedicalHistory(User user);
+    List<Schedule> getSchedulesByUser(User user);
 
     Schedule findById(long id);
+
+    List<Schedule> findAllByDoctorInformation(DoctorInformation doctor);
 }

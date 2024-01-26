@@ -30,7 +30,7 @@ public class ScheduleServiceImpl implements ScheduleService{
 
     @Override
     public List<Schedule> getMedicalHistory(User user) {
-        return scheduleRepository.getMedicalHistory(user);
+        return scheduleRepository.getSchedulesByUser(user);
     }
 
     @Override
@@ -71,5 +71,10 @@ public class ScheduleServiceImpl implements ScheduleService{
     @Override
     public Schedule findById(long id) {
         return scheduleRepository.findById(id);
+    }
+
+    @Override
+    public List<Schedule> getSchedulesOfDoctor(DoctorInformation doctor) {
+        return scheduleRepository.findAllByDoctorInformation(doctor);
     }
 }
