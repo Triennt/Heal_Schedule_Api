@@ -9,6 +9,16 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface DoctorInformationRepository extends JpaRepository<DoctorInformation, Long> {
+
+    /**
+     * Tìm kiếm tổng quát các thông tin của các bác sĩ dựa trên nhiều tiêu chí như khu vực, bệnh lý, giá cả và tên phòng khám.
+     *
+     * @param area       khu vực cần tìm kiếm (có thể là một phần của địa chỉ của phòng khám)
+     * @param pathology  bệnh lý cần tìm kiếm (có thể là một phần của mô tả chuyên khoa)
+     * @param price      giá cả tối đa của phòng khám cần tìm kiếm
+     * @param clinic     tên của phòng khám cần tìm kiếm (có thể là một phần của tên phòng khám)
+     * @return một danh sách các DoctorInformation thỏa mãn các tiêu chí tìm kiếm
+     */
     @Query("select D " +
             "from DoctorInformation D " +
             "join Specialization S on D.specialization = S " +
@@ -19,6 +29,12 @@ public interface DoctorInformationRepository extends JpaRepository<DoctorInforma
             "and C.name like %?4%")
     List<DoctorInformation> generalSearch(String area, String pathology, double price, String clinic);
 
+    /**
+     * Tìm kiếm các thông tin của các bác sĩ theo chuyên khoa.
+     *
+     * @param specialization tên chuyên khoa cần tìm kiếm (có thể là một phần của tên chuyên khoa)
+     * @return một danh sách các DoctorInformation thuộc chuyên khoa cần tìm kiếm
+     */
     @Query("select D " +
             "from DoctorInformation D " +
             "join Specialization S on D.specialization = S " +

@@ -25,6 +25,11 @@ public class HomeRestController {
     @Autowired
     private DoctorInformationService doctorInformationService;
 
+    /**
+     * Phương thức GET được sử dụng để truy xuất trang chính của ứng dụng, hiển thị thông tin tổng quan về các chuyên môn hàng đầu và các phòng khám hàng đầu.
+     *
+     * @return một đối tượng ResponseEntity chứa kết quả của việc truy xuất trang chính, bao gồm danh sách các chuyên môn hàng đầu và các phòng khám hàng đầu
+     */
     @GetMapping("/home")
     public ResponseEntity<HomeResponse> home(){
 
@@ -35,6 +40,12 @@ public class HomeRestController {
         return new ResponseEntity<HomeResponse>(homeResponse, HttpStatus.OK);
     }
 
+    /**
+     * Phương thức GET được sử dụng để thực hiện tìm kiếm tổng quát dựa trên các yêu cầu tìm kiếm.
+     *
+     * @param generalSearchRequest   Đối tượng chứa thông tin về yêu cầu tìm kiếm tổng quát
+     * @return một đối tượng ResponseEntity chứa kết quả của việc tìm kiếm tổng quát, bao gồm thông tin về các bác sĩ phù hợp với yêu cầu tìm kiếm
+     */
     @GetMapping("/home/search/general")
     public ResponseEntity<SearchResponse> generalSearch(@RequestBody GeneralSearchRequest generalSearchRequest){
 
@@ -44,6 +55,12 @@ public class HomeRestController {
         return new ResponseEntity<SearchResponse>(searchResponse, HttpStatus.OK);
     }
 
+    /**
+     * Phương thức GET được sử dụng để thực hiện tìm kiếm bác sĩ theo chuyên môn.
+     *
+     * @param specialization   Chuyên môn mà bạn muốn tìm kiếm bác sĩ
+     * @return một đối tượng ResponseEntity chứa kết quả của việc tìm kiếm theo chuyên môn, bao gồm thông tin về các bác sĩ có chuyên môn tương ứng
+     */
     @GetMapping("/home/search/specialization")
     public ResponseEntity<SearchResponse> specializationSearch(@RequestParam String specialization){
 

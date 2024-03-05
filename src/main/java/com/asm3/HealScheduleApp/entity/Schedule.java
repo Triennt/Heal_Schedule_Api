@@ -27,9 +27,6 @@ public class Schedule {
     @JoinColumn(name = "patients_id")
     private Patients patients;
 
-//    @Column(name = "pathology_name")
-//    private String pathologyName;
-
     @Column(name = "date")
     private LocalDate date;
 
@@ -51,28 +48,4 @@ public class Schedule {
 
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
-
-    public DoctorInformation getDoctorInformation() {
-        return doctorInformation;
-    }
-
-    public void setDoctorInformation(DoctorInformation doctorInformation) {
-        this.doctorInformation = doctorInformation;
-    }
-
-    public Patients getPatients() {
-        return patients;
-    }
-
-    public void setPatients(Patients patients) {
-        this.patients = patients;
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
 }

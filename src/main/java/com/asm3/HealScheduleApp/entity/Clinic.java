@@ -4,8 +4,6 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 @Entity
 @Table(name = "clinic")
 @Data
@@ -29,26 +27,11 @@ public class Clinic {
     @Column(name = "price")
     private double price;
 
-    @Column(name = "introduction_HTML")
-    private String introductionHTML;
-
-    @Column(name = "introduction_mark_down")
-    private String introductionMarkDown;
-
     @Column(name = "description")
     private String description;
 
     @Column(name = "image")
     private String image;
-
-    @Column(name = "created_at")
-    private LocalDateTime createdAt = LocalDateTime.now();
-
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
-
-    @Column(name = "deleted_at")
-    private LocalDateTime deletedAt;
 
 
 }

@@ -1,18 +1,20 @@
 package com.asm3.HealScheduleApp.response;
 
+import com.asm3.HealScheduleApp.entity.User;
+
 public class CreateUserResponse extends Response {
-    private Object data;
+    private User user;
 
-    public CreateUserResponse(int status, String message, Object data) {
+    public CreateUserResponse(int status, String message, User user) {
         super(status, message);
-        this.data = data;
+        this.user = user;
     }
 
-    public Object getData() {
-        return data;
+    public User getUser() {
+        return user;
     }
 
-    public void setData(Object data) {
-        this.data = data;
+    public void setUser(User user) {
+        this.user = user;
     }
 }

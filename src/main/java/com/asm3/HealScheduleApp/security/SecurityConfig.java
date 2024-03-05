@@ -18,24 +18,20 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class SecurityConfig {
 
-	// add a reference to our security data source
-//    @Autowired
     private UserService userService;
 	@Autowired
-	private AuthEntryPointJwt unauthorizedHandler;
-	@Bean
-	public AuthTokenFilter authenticationJwtTokenFilter() {
-		return new AuthTokenFilter();
-	}
+	private UnauthorizedHandler unauthorizedHandler;
+
+	// Cấu hình bộ lọc bảo mật
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
 		http.authorizeHttpRequests(configurer ->
 				configurer
-						.requestMatchers(HttpMethod.POST, "/register").permitAll()  //.hasAnyRole("USER","DOCTOR","ADMIN")
+						.requestMatchers(HttpMethod.POST, "/register").permitAll()
 						.requestMatchers(HttpMethod.GET, "/login").permitAll()
 						.requestMatchers(HttpMethod.GET, "/forgotPassword").permitAll()
-						.requestMatchers(HttpMethod.PUT, "/changePassword").permitAll()
+						.requestMatchers(HttpMethod.PUT, "/changePassword").hasAnyRole("USER","DOCTOR","ADMIN")
 						.requestMatchers(HttpMethod.GET, "/home/**").permitAll()
 						.requestMatchers(HttpMethod.GET,"/user/**").hasRole("USER")
 						.requestMatchers(HttpMethod.POST,"/user/**").hasRole("USER")
@@ -43,39 +39,46 @@ public class SecurityConfig {
 						.requestMatchers(HttpMethod.PUT,"/doctor/**").hasRole("DOCTOR")
 						.requestMatchers("/admin/**").hasRole("ADMIN")
 
-
 		);
 
+		// Cung cấp AuthenticationProvider và thêm bộ lọc JWT trước UsernamePasswordAuthenticationFilter
 		http.authenticationProvider(authenticationProvider(userService));
 		http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+
+		// Xử lý các ngoại lệ không được xác thực
 		http.exceptionHandling((exception) ->
-//				exception.accessDeniedPage("/accessDenied"));
 				exception.authenticationEntryPoint(unauthorizedHandler));
 
-		// disable Cross Site Request Forgery (CSRF)
-		// in general, not required for stateless REST APIs that use POST, PUT, DELETE and/or PATCH
+		// Vô hiệu hóa CSRF vì REST API thường không cần nó
 		http.csrf(csrf -> csrf.disable());
 
 		return http.build();
 	}
+
+	// Bean để tạo AuthTokenFilter để xác thực token JWT
+	@Bean
+	public AuthTokenFilter authenticationJwtTokenFilter() {
+		return new AuthTokenFilter();
+	}
+
+	// Bean để tạo AuthenticationManager
 	@Bean
 	public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
 		return authConfig.getAuthenticationManager();
 	}
 
-	//beans
-	//bcrypt bean definition
+	// Bean để tạo BCryptPasswordEncoder để mã hóa mật khẩu
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
 
-	//authenticationProvider bean definition
+	// Bean để cung cấp DaoAuthenticationProvider để xác thực người dùng từ cơ sở dữ liệu
 	@Bean
 	public DaoAuthenticationProvider authenticationProvider(UserService userService) {
 		DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
-		auth.setUserDetailsService(userService); //set the custom user details service
-		auth.setPasswordEncoder(passwordEncoder()); //set the password encoder - bcrypt
+		auth.setUserDetailsService(userService);
+		auth.setPasswordEncoder(passwordEncoder());
 		return auth;
 	}
 	  

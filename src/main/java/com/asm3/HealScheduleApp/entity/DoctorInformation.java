@@ -7,7 +7,6 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
 @Entity
 @Table(name = "doctor_information")
 @Data
@@ -37,31 +36,6 @@ public class DoctorInformation {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     @Valid
-    @JsonIgnoreProperties({"password","matchingPassword"})
+    @JsonIgnoreProperties({"password","matchingPassword","sessionToken"})
     private User user;
-
-    @Column(name = "created_at")
-    private LocalDateTime createdAt = LocalDateTime.now();
-
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
-
-    @Column(name = "deleted_at")
-    private LocalDateTime deletedAt;
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public Specialization getSpecialization() {
-        return specialization;
-    }
-
-    public void setSpecialization(Specialization specialization) {
-        this.specialization = specialization;
-    }
 }

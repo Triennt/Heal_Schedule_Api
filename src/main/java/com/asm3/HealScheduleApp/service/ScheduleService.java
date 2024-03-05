@@ -2,6 +2,7 @@ package com.asm3.HealScheduleApp.service;
 
 import com.asm3.HealScheduleApp.dto.BookRequest;
 import com.asm3.HealScheduleApp.entity.DoctorInformation;
+import com.asm3.HealScheduleApp.entity.Patients;
 import com.asm3.HealScheduleApp.entity.Schedule;
 import com.asm3.HealScheduleApp.entity.User;
 
@@ -13,4 +14,5 @@ public interface ScheduleService {
     Schedule save(Schedule schedule);
     Schedule findById(long id);
     List<Schedule> getSchedulesOfDoctor(DoctorInformation doctor);
+    Schedule getScheduleOfPatients(Patients patients);
 }

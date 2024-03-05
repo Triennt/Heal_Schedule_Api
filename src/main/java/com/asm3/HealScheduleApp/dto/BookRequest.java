@@ -14,7 +14,7 @@ import java.time.LocalDate;
 public class BookRequest {
 
     @NotNull(message = "is required")
-    private long idDoctor;
+    private Long idDoctor;
 
     @NotNull(message = "is required")
     private LocalDate date;
@@ -23,8 +23,9 @@ public class BookRequest {
     private Time time;
 
     @NotNull(message = "is required")
-    private double price;
+    private Double price;
 
     @Valid
     private Patients patients;
+
 }

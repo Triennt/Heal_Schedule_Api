@@ -10,6 +10,7 @@ import com.asm3.HealScheduleApp.entity.Specialization;
 import com.asm3.HealScheduleApp.entity.User;
 import com.asm3.HealScheduleApp.exception.CustomNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -48,7 +49,6 @@ public class DoctorInformationServiceImpl implements DoctorInformationService{
         return doctorInformationRepository.findById(id);
     }
 
-
     @Override
     public DoctorInformation findByEmail(String email) {
         User user = userRepository.findByEmail(email);
@@ -64,11 +64,9 @@ public class DoctorInformationServiceImpl implements DoctorInformationService{
 
         User userDoctor = doctorRequest.getUser();
         userDoctor.setId(0);
-        userDoctor.setRoles(Arrays.asList(roleService.findByName("ROLE_USER")));
+        userDoctor.setRoles(Arrays.asList(roleService.findByName("ROLE_DOCTOR")));
         userDoctor.setPassword(passwordEncoder.encode(userDoctor.getPassword()));
         userDoctor.setMatchingPassword(userDoctor.getPassword());
-
-        System.out.println("User in public DoctorInformation save(AddDoctorRequest doctorRequest): "+userDoctor.toString());
 
         DoctorInformation doctor = new DoctorInformation();
         doctor.setId(0);
@@ -81,4 +79,9 @@ public class DoctorInformationServiceImpl implements DoctorInformationService{
         return doctorInformationRepository.save(doctor);
     }
 
+    @Override
+    public DoctorInformation getDoctorSession() {
+        String emailDoctor = SecurityContextHolder.getContext().getAuthentication().getName();
+        return findByEmail(emailDoctor);
+    }
 }

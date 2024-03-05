@@ -22,6 +22,12 @@ public class LoginRestController {
     @Autowired
     private UserService userService;
 
+    /**
+     * Phương thức GET được sử dụng để xác thực người dùng thông qua email và mật khẩu và trả về mã JWT cho người dùng đã xác thực.
+     *
+     * @param loginRequest   Đối tượng chứa thông tin đăng nhập của người dùng (email và mật khẩu)
+     * @return một đối tượng ResponseEntity chứa kết quả của việc xác thực người dùng và mã JWT nếu xác thực thành công, hoặc thông báo lỗi nếu không thành công
+     */
     @GetMapping("/login")
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
         // Xác thực từ email và password.
@@ -42,11 +48,4 @@ public class LoginRestController {
         return new ResponseEntity<LoginResponse>(message, HttpStatus.OK);
 
     }
-//    @RequestMapping("/accessDenied")
-//    public ResponseEntity<Response> accessDenied(){
-//        System.out.println("/accessDenied");
-//        Response response = new Response(HttpStatus.UNAUTHORIZED.value(),"Access denied");
-//        return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
-//    }
-
 }

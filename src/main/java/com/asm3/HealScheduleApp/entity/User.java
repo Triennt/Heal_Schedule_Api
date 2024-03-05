@@ -9,7 +9,6 @@ import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
 import java.util.Collection;
 
 @FieldMatch.List({
@@ -17,7 +16,6 @@ import java.util.Collection;
 })
 @Entity
 @Table(name = "user")
-//@JsonIgnoreProperties({"password","matchingPassword"})
 @Data
 @NoArgsConstructor
 public class User {
@@ -27,8 +25,8 @@ public class User {
     @Column(name = "id")
     private long id;
 
-    @NotBlank(message = "Tên không được để trống.")
-    @NotNull(message = "Bắc buộc")
+    @NotBlank(message = "cannot be empty.")
+    @NotNull(message = "is required")
     @Column(name = "full_name")
     private String fullName;
 
@@ -36,18 +34,18 @@ public class User {
     @Column(name = "email")
     private String email;
 
-    @Pattern(regexp = "0[0-9]{9}", message = "Số điện thoại không hợp lệ.")
-    @NotNull(message = "Bắc buộc")
+    @Pattern(regexp = "0[0-9]{9}", message = "Invalid phone number.")
+    @NotNull(message = "is required")
     @Column(name = "phone")
     private String phone;
 
-    @NotBlank(message = "Giới tính không được để trống.")
-    @NotNull(message = "Bắc buộc")
+    @NotBlank(message = "cannot be empty.")
+    @NotNull(message = "is required")
     @Column(name = "gender")
     private String gender;
 
-    @NotBlank(message = "Địa chỉ không được để trống.")
-    @NotNull(message = "Bắc buộc")
+    @NotBlank(message = "cannot be empty.")
+    @NotNull(message = "is required")
     @Column(name = "address")
     private String address;
 
@@ -57,11 +55,13 @@ public class User {
     @Column(name = "avatar")
     private String avatar;
 
+    @Column(name = "secret_key")
+    private String sessionToken;
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "active_id")
     private ActiveStatus activeStatus = new ActiveStatus();
 
-//    @ValidPassword
     @Column(name = "password")
     private String password;
 
@@ -73,29 +73,4 @@ public class User {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Collection<Role> roles;
-
-    @Column(name = "created_at")
-    private LocalDateTime createdAt = LocalDateTime.now();
-
-    @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
-
-    @Column(name = "deleted_at")
-    private LocalDateTime deletedAt;
-
-//    public Collection<Role> getRoles() {
-//        return roles;
-//    }
-//
-//    public void setRoles(Collection<Role> roles) {
-//        this.roles = roles;
-//    }
-
-//    public Active getActive() {
-//        return active;
-//    }
-//
-//    public void setActive(Active active) {
-//        this.active = active;
-//    }
 }

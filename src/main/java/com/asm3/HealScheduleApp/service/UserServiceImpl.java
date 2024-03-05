@@ -26,6 +26,13 @@ public class UserServiceImpl implements UserService{
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
+    /**
+     * Phương thức này được sử dụng để tải thông tin người dùng từ cơ sở dữ liệu theo địa chỉ email.
+     *
+     * @param email Địa chỉ email của người dùng cần tải thông tin.
+     * @return UserDetails Đối tượng chứa thông tin người dùng đã được tải.
+     * @throws UsernameNotFoundException Ném ra khi không tìm thấy người dùng tương ứng với địa chỉ email cung cấp.
+     */
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User user = findByEmail(email);
@@ -35,14 +42,22 @@ public class UserServiceImpl implements UserService{
         return new org.springframework.security.core.userdetails.User(
                 user.getEmail(),
                 user.getPassword(),
-                true, // enabled
-                true, // accountNonExpired
-                true, // credentialsNonExpired
-                user.getActiveStatus().isActive(),
-                mapRolesToAuthorities(user.getRoles())
+                true, // enabled: Tài khoản được kích hoạt
+                true,        // accountNonExpired: Tài khoản không hết hạn
+                true,        // credentialsNonExpired: Mật khẩu không hết hạn
+                user.getActiveStatus().isActive(), // accountNonLocked: Tài khoản không bị khóa
+                mapRolesToAuthorities(user.getRoles()) // Danh sách các quyền được gán cho người dùng
         );
-//        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(),
-//                mapRolesToAuthorities(user.getRoles()));
+    }
+
+    /**
+     * Phương thức này chuyển đổi một danh sách các vai trò thành một danh sách các quyền được cấp.
+     *
+     * @param roles Danh sách các vai trò của người dùng.
+     * @return Collection<? extends GrantedAuthority> Danh sách các quyền được cấp.
+     */
+    private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
+        return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
     }
 
     @Override
@@ -50,9 +65,6 @@ public class UserServiceImpl implements UserService{
         return userRepository.findById(id);
     }
 
-    private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
-        return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
-    }
     @Override
     public User findByEmail(String email) {
         return userRepository.findByEmail(email);
@@ -60,7 +72,6 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User create(User user) {
-        System.out.println("Called create: ");
         user.setId(0);
         user.setRoles(Arrays.asList(roleService.findByName("ROLE_USER")));
         user.setPassword(passwordEncoder.encode(user.getPassword()));
@@ -78,6 +89,7 @@ public class UserServiceImpl implements UserService{
         User updateUser = userRepository.findByEmail(email);
         updateUser.setPassword(passwordEncoder.encode(changePasswordRequest.getPassword()));
         updateUser.setMatchingPassword(updateUser.getPassword());
+        updateUser.setSessionToken("");
         userRepository.save(updateUser);
     }
 }

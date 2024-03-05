@@ -36,14 +36,12 @@ public class ScheduleServiceImpl implements ScheduleService{
     @Override
     public Schedule save(BookRequest bookRequest) {
 
-        DoctorInformation doctor = doctorInformationRepository.findById(bookRequest.getIdDoctor());
+        DoctorInformation doctor = doctorInformationRepository.findById((long) bookRequest.getIdDoctor());
         if (doctor == null){
             throw new CustomNotFoundException("Could not find a doctor with id = "+bookRequest.getIdDoctor());
-//            errorDescription = "Could not find a doctor with id = "+bookRequest.getIdDoctor();
         }
         if (bookRequest.getPrice() != doctor.getSpecialization().getClinic().getPrice()){
             throw new ValueNotMatchException("Medical examination price is not match");
-//            errorDescription = "Medical examination price is not match";
         }
 
         Patients patients = bookRequest.getPatients();
@@ -54,7 +52,7 @@ public class ScheduleServiceImpl implements ScheduleService{
         Schedule schedule = new Schedule();
         schedule.setId(0);
         schedule.setPatients(patientsRepository.save(patients));
-        schedule.setDoctorInformation(doctorInformationRepository.findById(bookRequest.getIdDoctor()));
+        schedule.setDoctorInformation(doctor);
         schedule.setDate(bookRequest.getDate());
         schedule.setTime(bookRequest.getTime());
         schedule.setPrice(bookRequest.getPrice());
@@ -76,5 +74,10 @@ public class ScheduleServiceImpl implements ScheduleService{
     @Override
     public List<Schedule> getSchedulesOfDoctor(DoctorInformation doctor) {
         return scheduleRepository.findAllByDoctorInformation(doctor);
+    }
+
+    @Override
+    public Schedule getScheduleOfPatients(Patients patients) {
+        return scheduleRepository.findByPatients(patients);
     }
 }

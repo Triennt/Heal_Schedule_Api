@@ -16,4 +16,6 @@ public interface DoctorInformationService {
     DoctorInformation findByEmail(String email);
 
     DoctorInformation save(AddDoctorRequest doctor);
+
+    DoctorInformation getDoctorSession();
 }
