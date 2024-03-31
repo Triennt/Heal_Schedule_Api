@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introduce</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+        }
+        h1, h2, h3 {
+            color: #333;
+        }
+        p {
+            line-height: 1.6;
+            color: #666;
+        }
+        .contact-info {
+            margin-top: 30px;
+        }
+        .contact-info p {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Mô tả dự án Health Chedule API</h1>
+    <p>Dự án API cung cấp các API để quản lý việc đặt lịch khám bệnh cho các bệnh nhân, đi kèm với những tiện ích để thăm khám thông qua việc: tìm kiếm, đặt lịch, tra cứu hồ sơ, ...</p>
+
+    <h2>Mục tiêu của API</h2>
+    <p>
+        - Hỗ trợ các ứng dụng và dịch vụ y tế trong việc quản lý lịch trình khám bệnh của bệnh nhân.<br>
+        - Cung cấp giao diện API đơn giản và linh hoạt để tương tác với hệ thống đặt lịch khám bệnh.<br>
+        - Đảm bảo tính bảo mật và sự chính xác của thông tin lịch trình khám bệnh.
+    </p>
+
+    <h2>Chức Năng Chính</h2>
+    <ul>
+        <li>Đăng ký / Đăng nhập</li>
+        <li>Đặt Lịch Khám Bệnh</li>
+        <li>Quản Lý Lịch Trình Khám Bệnh</li>
+        <li>Tìm Kiếm Bác Sĩ hoặc Cơ Sở Y Tế</li>
+    </ul>
+
+    <h2>Thông Tin Kỹ Thuật</h2>
+    <ul>
+        <li>Phiên bản API: v1.0</li>
+        <li>Giao thức: HTTPS</li>
+        <li>Định dạng dữ liệu: JSON</li>
+        <li>Xác thực: JWT Token</li>
+    </ul>
+
+    <h2>Cách Sử Dụng API</h2>
+    <h3>1. Dành cho người dùng hệ thống (user)</h3>
+    <h4>1.1. Đăng ký</h4>
+    <p>HTTP: POST <p th:text="${contextPath}+'/register'"></p></p>
+    <p>Mẫu body</p>
+    <p>z
+        {
+        "fullName" : "Nguyễn Văn A",
+        "gender" : "Nam",
+        "email" : "vana@gmail.com",
+        "phone" : "0123456789",
+        "address" : "Việt Nam",
+        "password" : "123",
+        "matchingPassword" : "123"
+        }
+    </p>
+
+    <div class="contact-info">
+        <h2>Thông Tin Liên Hệ</h2>
+        <p>Email: triennt97@gmail.com</p>
+        <p>Số Điện Thoại: 035 7173 793</p>
+    </div>
+</div>
+</body>
+</html>
+
+

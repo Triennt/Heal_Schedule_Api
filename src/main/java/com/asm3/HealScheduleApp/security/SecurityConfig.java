@@ -28,6 +28,7 @@ public class SecurityConfig {
 
 		http.authorizeHttpRequests(configurer ->
 				configurer
+						.requestMatchers(HttpMethod.GET, "/").permitAll()
 						.requestMatchers(HttpMethod.POST, "/register").permitAll()
 						.requestMatchers(HttpMethod.GET, "/login").permitAll()
 						.requestMatchers(HttpMethod.GET, "/forgotPassword").permitAll()
