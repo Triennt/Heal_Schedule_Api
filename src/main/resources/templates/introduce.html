@@ -26,12 +26,14 @@
         .contact-info p {
             margin-bottom: 10px;
         }
+
     </style>
 </head>
 <body>
 <div class="container">
     <h1>Mô tả dự án Health Chedule API</h1>
-    <p>Dự án API cung cấp các API để quản lý việc đặt lịch khám bệnh cho các bệnh nhân, đi kèm với những tiện ích để thăm khám thông qua việc: tìm kiếm, đặt lịch, tra cứu hồ sơ, ...</p>
+    <p>Dự án API cung cấp các API để quản lý việc đặt lịch khám bệnh cho các bệnh nhân, đi kèm với những tiện ích để
+        thăm khám thông qua việc: tìm kiếm, đặt lịch, tra cứu hồ sơ, ...</p>
 
     <h2>Mục tiêu của API</h2>
     <p>
@@ -59,9 +61,10 @@
     <h2>Cách Sử Dụng API</h2>
     <h3>1. Dành cho người dùng hệ thống (user)</h3>
     <h4>1.1. Đăng ký</h4>
-    <p>HTTP: POST <p th:text="${contextPath}+'/register'"></p></p>
+    <p>Method: POST</p>
+    <p th:text="'https://' + ${contextPath} + '/register'"></p>
     <p>Mẫu body</p>
-    <p>z
+    <pre>
         {
         "fullName" : "Nguyễn Văn A",
         "gender" : "Nam",
@@ -71,7 +74,152 @@
         "password" : "123",
         "matchingPassword" : "123"
         }
-    </p>
+    </pre>
+
+    <h4>1.2. Đăng nhập</h4>
+    <p>Method: GET</p>
+    <p th:text="'https://' + ${contextPath} + '/login'"></p>
+    <p>Body</p>
+    <pre>
+       {
+            "email" : "vana@gmail.com",
+            "password" : "123"
+        }
+    </pre>
+
+    <h4>1.3 Quên mật khẩu</h4>
+    <h5>1.3.1 Gửi Email xác thực và nhận JWT Token</h5>
+    <p>Method: GET</p>
+    <p th:text="'https://' + ${contextPath} + '/forgotPassword'"></p>
+    <p>Param: 'email'</p>
+    <h5>1.3.2 Đổi mật khẩu</h5>
+    <p>Method: PUT</p>
+    <p th:text="'https://' + ${contextPath} + '/changePassword'"></p>
+    <p>Auth: Bearer Token (nhận trong mail)</p>
+    <p>Body</p>
+    <pre>
+        {
+            "password" : "user123",
+            "matchingPassword" : "user123"
+        }
+    </pre>
+
+    <h4>1.4. Hiển thị thông tin của các chuyên khoa nổi bật</h4>
+    <p>Method: GET</p>
+    <p th:text="'https://' + ${contextPath} + '/home'"></p>
+
+    <h4>1.5. Hiển thị thông tin của các cơ sở y tế nổi bật</h4>
+    <p>Method: GET</p>
+    <p th:text="'https://' + ${contextPath} + '/home'"></p>
+
+    <h4>1.6. Hiển thị thông tin cá nhân</h4>
+    <p>Method: GET</p>
+    <p th:text="'https://' + ${contextPath} + '/user/profile'"></p>
+    <p>Auth: Bearer Token (nhận khi login thành công)</p>
+
+    <h4>1.7. Tìm kiếm chung</h4>
+    <p>Method: GET</p>
+    <p th:text="'https://' + ${contextPath} + '/home/search/general'"></p>
+    <p>Body</p>
+    <pre>
+        {
+            "area" : "bến tre",
+            "pathology" : "tim mạch",
+            "price" : 300000,
+            "clinic" : "Minh đức"
+        }
+    </pre>
+
+    <h4>1.8. Đặt lịch khám</h4>
+    <p>Method: POST</p>
+    <p th:text="'https://' + ${contextPath} + '/user/book'"></p>
+    <p>Auth: Bearer Token (nhận khi login thành công)</p>
+    <p>Body</p>
+    <pre>
+        {
+            "idDoctor" : 2,
+            "date" : "2024-03-15",
+            "time" : "08:00:00",
+            "price" : 300000,
+            "patients": {
+                "fullName": "Nguyễn Văn A",
+                "gender": "nam",
+                "phone": "0123456789",
+                "birthday": "1997-10-11",
+                "address": "Bến Tre",
+                "pathologyName": "khám tay"
+                }
+
+        }
+    </pre>
+
+    <h3>2 Dành cho bác sĩ</h3>
+    <h4>2.1 Hiển thị danh sách bệnh nhân</h4>
+    <p>Method: GET</p>
+    <p th:text="'https://' + ${contextPath} + '/doctor/patients'"></p>
+    <p>Auth: Bearer Token (nhận khi login thành công)</p>
+
+    <h4>2.2 Nhận lịch khám của bệnh nhân</h4>
+    <p>Method: PUT</p>
+    <p th:text="'https://' + ${contextPath} + '/accept/{scheduleId}'"></p>
+    <p>Auth: Bearer Token (nhận khi login thành công)</p>
+
+    <h4>2.3 Hủy lịch khám của bệnh nhân</h4>
+    <p>Method: PUT</p>
+    <p th:text="'https://' + ${contextPath} + '/cancel/{scheduleId}'"></p>
+    <p>Param: 'reason'</p>
+    <p>Auth: Bearer Token (nhận khi login thành công)</p>
+
+    <h4>2.4 Gửi thông tin về email cá nhân của bệnh nhân</h4>
+    <p>Method: GET</p>
+    <p th:text="'https://' + ${contextPath} + '/doctor/sendEmail'"></p>
+    <p>Auth: Bearer Token (nhận khi login thành công)</p>
+    <p>Body: File pdf</p>
+
+    <h3>3. Dành cho người quản lý hệ thống (Admin)</h3>
+    <h4>3.1. Khóa tài khoản</h4>
+    <p>Method: PUT</p>
+    <p th:text="'https://' + ${contextPath} + '/admin/lockAccount/{userId}'"></p>
+    <p>Param: 'reason'</p>
+    <p>Auth: Bearer Token (nhận khi login thành công)</p>
+
+    <h4>3.2. Hủy khóa tài khoản</h4>
+    <p>Method: PUT</p>
+    <p th:text="'https://' + ${contextPath} + '/admin/unlockAccount/{userId}'"></p>
+    <p>Auth: Bearer Token (nhận khi login thành công)</p>
+
+    <h4>3.3 Thêm tài khoản của bác sĩ</h4>
+    <p>Method: POST</p>
+    <p th:text="'https://' + ${contextPath} + '/admin/addDoctor'"></p>
+    <p>Auth: Bearer Token (nhận khi login thành công)</p>
+    <p>Body</p>
+    <pre>
+        {
+            "introduce" : "introduce doctor bla bla...",
+            "trainingProcess" : "training process doctor bla bla...",
+            "achievements" : "achievements doctor bla bla...",
+            "specializationId" :10,
+            "user" : {
+                "fullName" : "Nguyễn Chí Thanh",
+                "gender" : "Nam",
+                "email" : "thanh@gmail.com",
+                "phone" : "0971563392",
+                "address" : "Cẩm Sơn",
+                "password" : "123",
+                "matchingPassword" : "123"
+            }
+        }
+    </pre>
+
+    <h4>3.4 Xem thông tin chi tiết lịch khám của từng bệnh nhân</h4>
+    <p>Method: GET</p>
+    <p th:text="'https://' + ${contextPath} + '/admin/schedule/patients/{patientsId}'"></p>
+    <p>Auth: Bearer Token (nhận khi login thành công)</p>
+
+    <h4>3.5 Xem thông tin chi tiết lịch khám của từng bác sĩ</h4>
+    <p>Method: GET</p>
+    <p th:text="'https://' + ${contextPath} + '/admin/schedule/doctor/{doctorId}'"></p>
+    <p>Auth: Bearer Token (nhận khi login thành công)</p>
 
     <div class="contact-info">
         <h2>Thông Tin Liên Hệ</h2>
